@@ -1,11 +1,9 @@
 import React from 'react';
-import { Hello } from './Hello.jsx';
-import { Info } from './Info.jsx';
+import {Products} from './Pages/Products';
+import {ProductRemove} from '../ui/Components/Products/ProductRemove';
 
 export const App = () => (
-  <div>
-    <h1>Welcome to Meteor!</h1>
-    <Hello/>
-    <Info/>
-  </div>
+  
+  // <Products/>
+  <Products/>
 );
