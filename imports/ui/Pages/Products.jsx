@@ -4,7 +4,11 @@ import { ProductsCollection } from '../../db/ProductsCollection';
 import {useTracker} from 'meteor/react-meteor-data';
 import { DataGrid } from '@material-ui/data-grid';
 import { ProductAdd } from '../Components/Products/ProductAdd';
-import { Button } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
+import { ProductCard } from '../Components/Products/ProductCard';
+import {ProductRemove} from '../Components/Products/ProductRemove';
+
+
 
 
 export const Products = () => {
@@ -28,25 +32,14 @@ export const Products = () => {
     const products = ProductsCollection.find({}).fetch();
 
     return {products, isLoading: false};
+    
   })
 
+ 
   
    
-  const rows = products.map((product)=>{
-     return {
-       id:product._id,
-       title:product.title,
-       description:product.description,
-       details:product.details
-     }
-   })
-  const columns = [
-    { field: 'id', headerName: 'Product Id', width: 120 },
-    { field: 'title', headerName: 'Title', width: 120 },
-    { field: 'description', headerName: 'Description', width: 300 },
-    { field: 'details', headerName: 'Details', width: 120 }, 
-  ];
-
+  
+     
 
 
   return (
@@ -55,11 +48,35 @@ export const Products = () => {
         dialogOpen={dialogOpen}
         closeDialog={ setDialogOpen}
       />
-    <div style={{ height: 300, width: '100%' }}>
-      <DataGrid rows={rows} columns={columns} />
-    </div>
-    <Button onClick={openDialog}>Add Product</Button>
+        <Button onClick={openDialog}>Add Product</Button>
+    <div style={styles.productCard}>
+
+      {products.map((product) =>{
+        return(
+          <ProductCard
+            key={product._id}
+            _id={product._id}
+            title={product.title}
+            description={product.description}
+            details={product.details}
+          />
+        )
+      })}
+      </div>
     </Fragment>
   )
   
 };
+
+
+const styles = {
+  productCard: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr 1fr",
+    gridColumnGap: "30px",
+    gridRowGap: "30px"
+  }
+}
+
+
+

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import {Button, Dialog, TextField} from '@material-ui/core';
+import {checkStringsIfNotEmpty} from '../../../helpers/index';
 
 
 
@@ -53,11 +54,11 @@ export const ProductAdd = (props) => {
         <h1>Add Product</h1>
 
         <form>
-          <TextField value={productTitle} label="Product Title" required={true} multiline={true} variant="outlined" onChange={insertProductTitle}/>
+          <TextField value={productTitle} label="Product Title" required={true} multiline={true} variant="outlined" onChange={insertProductTitle} autoFocus={true}/>
           <TextField value={productDescription} label="Product Description" required={true} multiline={true} variant="outlined" onChange={insertProductDescription}/>
           <TextField value={productDetails} label="Product Details" required={true} multiline={true} variant="outlined" onChange={insertProductDetails}/>
 
-          <Button onClick={addProduct}>Save</Button>
+          <Button onClick={addProduct} disabled={!checkStringsIfNotEmpty([productDescription,productDetails,productTitle])}>Save</Button>
 
         </form>
 

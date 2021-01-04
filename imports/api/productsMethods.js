@@ -1,20 +1,28 @@
-import {ProductsCollection} from '../../imports/db/ProductsCollection';
+import {ProductsCollection} from '../db/ProductsCollection';
 import {check} from 'meteor/check';
 import SimpleSchema from 'simpl-schema';
+import {checkStringsIfNotEmpty} from '../helpers/index'
 
 
 
 Meteor.methods({
 
+
+
   'products.insert'(title, description, details){
    
+   
+    if (checkStringsIfNotEmpty([title,description,details])) {
 
-    ProductsCollection.insert({
-     title,
-     description,
-     details,
-     createdAt: new Date,
-    })
+      ProductsCollection.insert({
+        title,
+        description,
+        details,
+        createdAt: new Date,
+       })
+      
+    }
+   
   },
 
 
