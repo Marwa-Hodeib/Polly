@@ -49,16 +49,14 @@ export const ProductAdd = (props) => {
   return(
 
     
-      <Dialog fullScreen open={props.dialogOpen}>
+      <Dialog style={styles.container}fullScreen open={props.dialogOpen}>
 
-        <h1>Add Product</h1>
-
-        <form>
-          <TextField value={productTitle} label="Product Title" required={true} multiline={true} variant="outlined" onChange={insertProductTitle} autoFocus={true}/>
+      <h1 style={styles.title}>Add Product</h1>
+        <form style={styles.form}>
+          <TextField value={productTitle} label="Product Title" required={true} multiline={true} variant="outlined" onChange={insertProductTitle} />
           <TextField value={productDescription} label="Product Description" required={true} multiline={true} variant="outlined" onChange={insertProductDescription}/>
           <TextField value={productDetails} label="Product Details" required={true} multiline={true} variant="outlined" onChange={insertProductDetails}/>
-
-          <Button onClick={addProduct} disabled={!checkStringsIfNotEmpty([productDescription,productDetails,productTitle])}>Save</Button>
+            <Button onClick={addProduct} variant={"outlined"} size={"large"} disabled={!checkStringsIfNotEmpty([productDescription,productDetails,productTitle])}>Save</Button>
 
         </form>
 
@@ -68,7 +66,16 @@ export const ProductAdd = (props) => {
     
 
   )
+}
 
+const styles = {
+  form:{
+    display: "flex",
+    justifyContent: "space-around"
+  },
 
-
+  title:{
+    justifySelf: "flex-end"
+  },
+  
 }

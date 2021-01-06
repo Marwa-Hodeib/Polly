@@ -6,6 +6,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import { CardContent } from '@material-ui/core';
 import {ProductRemove} from './ProductRemove';
+import { ProductUpdate } from './ProductUpdate';
 
 
 
@@ -13,6 +14,16 @@ import {ProductRemove} from './ProductRemove';
 export const ProductCard = (props) => {
 
   const [alertOpen, setAlertOpen] = useState (false);
+  const [editOpen, setEditOpen] = useState (false);
+
+  const openEdit = (_id) => {
+    setEditOpen(true)
+  }
+
+
+  const closeEdit = () => {
+    setEditOpen(false)
+  }
 
 
   const openAlert = (_id) => {
@@ -33,6 +44,16 @@ export const ProductCard = (props) => {
       open={alertOpen}
       onClose={closeAlert}
       />
+
+      <ProductUpdate
+        _id={props._id}
+        editOpen={editOpen}
+        closeDialog={closeEdit}
+        title={props.title}
+        description={props.description}
+        details={props.details}      
+      />
+
       <Card style={styles.container} variant='outlined'>
         <CardContent>
         <img src='images/best_online_clothes_shops.jpg' style={styles.image}/>
@@ -49,7 +70,7 @@ export const ProductCard = (props) => {
         <Button size="small" color="secondary" style={styles.button} variant="contained" disableElevation onClick={openAlert}>
           Delete
         </Button>
-        <Button size="small" color="primary" style={styles.button} variant="contained" disableElevation>
+        <Button size="small" color="primary" style={styles.button} variant="contained" disableElevation onClick={openEdit }>
           Edit
         </Button>
       </CardActions>

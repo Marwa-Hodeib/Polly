@@ -1,6 +1,5 @@
 import {ProductsCollection} from '../db/ProductsCollection';
 import {check} from 'meteor/check';
-import SimpleSchema from 'simpl-schema';
 import {checkStringsIfNotEmpty} from '../helpers/index'
 
 
@@ -33,19 +32,17 @@ Meteor.methods({
   },
 
 
-  'products.updateText'({productId, newText}){
-    new SimpleSchema ({
-      productId: {type: String},
-      newText: {type: String}
-    }).validate({productId, newText});
+  'products.updateProduct'({productId,title, description, details}){
 
-    const product = ProductsCollection.findOne({_id: productId});
+    if (checkStringsIfNotEmpty([title, description, details])) {
+      const test = ProductsCollection.update(productId, {
+        $set: {
+          title,
+          description,
+          details
+        }})
 
-    ProductsCollection.update(productId, {
-      $set: {text: newText}
-    });
-
+    console.log(test)
+    }
   }
-
-
 })
