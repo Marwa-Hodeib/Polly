@@ -6,8 +6,8 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import { CardContent } from '@material-ui/core';
 import {ProductRemove} from './ProductRemove';
-import { ProductUpdate } from './ProductUpdate';
-
+import { Avatar } from '@material-ui/core';
+import { ProductInfo } from './ProductInfo';
 
 
 
@@ -16,86 +16,98 @@ export const ProductCard = (props) => {
   const [alertOpen, setAlertOpen] = useState (false);
   const [editOpen, setEditOpen] = useState (false);
 
-  const openEdit = (_id) => {
-    setEditOpen(true)
+  const toggleEdit = () => {
+    setEditOpen(!editOpen)
   }
 
-
-  const closeEdit = () => {
-    setEditOpen(false)
+  const toggleAlert = () => {
+    setAlertOpen(!alertOpen)
   }
-
-
-  const openAlert = (_id) => {
-    setAlertOpen(true)
-  }
-
-
-  const closeAlert = () => {
-    setAlertOpen(false)
-  }
-
-  
 
   return(
     <div>
       <ProductRemove
-      _id={props._id}
-      open={alertOpen}
-      onClose={closeAlert}
+        _id={props.product._id}
+        open={alertOpen}
+        onClose={toggleAlert}
       />
-
-      <ProductUpdate
-        _id={props._id}
-        editOpen={editOpen}
-        closeDialog={closeEdit}
-        title={props.title}
-        description={props.description}
-        details={props.details}      
+      <ProductInfo
+         product={props.product}
+         isOpen={editOpen}
+         closeDialog={toggleEdit} 
       />
+<div onClick={toggleEdit} style={styles.clickableCard}>
+  <Card style={styles.container} variant='outlined'>
+    <CardContent>
+      <Avatar
+        variant="rounded"
+        alt="cloths" 
+        style={styles.avatar}
+        src="https://cdn.pixabay.com/photo/2015/03/03/06/48/fabric-657001_960_720.jpg"
+        />
 
-      <Card style={styles.container} variant='outlined'>
-        <CardContent>
-        <img src='images/best_online_clothes_shops.jpg' style={styles.image}/>
-        <Typography gutterBottom variant="h5" component="h2" style={styles.title}>{props.title}</Typography>
-        <Typography variant="caption" color="textSecondary" component="h6">
-            {props.details}
-          </Typography>
-        <Typography variant="body2" component="p">
-            {props.description}
-          </Typography>
-       
-          </CardContent>
-          <CardActions>
-        <Button size="small" color="secondary" style={styles.button} variant="contained" disableElevation onClick={openAlert}>
-          Delete
-        </Button>
-        <Button size="small" color="primary" style={styles.button} variant="contained" disableElevation onClick={openEdit }>
-          Edit
-        </Button>
+        <Typography
+          gutterBottom variant="h5" 
+          component="h2" 
+          style={styles.title}>{props.product.title}
+         </Typography>
+
+        <Typography 
+          variant="caption" 
+          color="textSecondary" 
+          component="h6">
+          {props.product.details}
+        </Typography>
+
+      </CardContent>
+        <CardActions>
+          <Button 
+            size="small" 
+            color="secondary" 
+            style={styles.button} 
+            variant="contained" 
+            disableElevation 
+            onClick={toggleAlert}>
+            Delete
+          </Button>
+          <Button 
+            size="small" 
+            color="primary" 
+            style={styles.button} 
+            variant="contained" 
+            disableElevation 
+            onClick={toggleEdit }>
+            Edit
+          </Button>
       </CardActions>
-       
-     
-      </Card>
-    </div>
+       </Card>
+       </div>
+  </div>
   )
 
 }
 
 const styles = {
   container:{
-    width:"100%",
+    width:"170px",
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "column"
     
-  },
-
-  image:{
-    width:"300px",
-    height:"150px",
   },
 
   title:{
     paddingTop: "20px"
   },
+
+  avatar:{
+    height: 'auto', 
+    width: '100%',
+  },
+
+  clickableCard:{
+    cursor: "pointer"
+  }
 
 }
 

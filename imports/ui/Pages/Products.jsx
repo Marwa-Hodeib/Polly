@@ -2,9 +2,9 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { ProductsCollection } from '../../db/ProductsCollection';
 import {useTracker} from 'meteor/react-meteor-data';
-import { ProductAdd } from '../Components/Products/ProductAdd';
 import { Button} from '@material-ui/core';
 import { ProductCard } from '../Components/Products/ProductCard';
+import { ProductInfo } from '../Components/Products/ProductInfo';
 
 
 
@@ -19,8 +19,8 @@ export const Products = () => {
  
 
 
-  const openDialog = () =>{
-    setDialogOpen(true)
+  const toggleDialog = () =>{
+    setDialogOpen(!dialogOpen)
   }
 
 
@@ -40,31 +40,29 @@ export const Products = () => {
     
   })
 
- 
-  
-   
-  
-     
-
-
   return (
     <Fragment>
-      <ProductAdd 
-        dialogOpen={dialogOpen}
-        closeDialog={ setDialogOpen}
-      />
+      <ProductInfo
+       isOpen={dialogOpen}
+       closeDialog={toggleDialog} 
+       />
+
       <div style={styles.button}>
-        <Button onClick={openDialog} color={"secondary"} style={styles.addButton} variant={"contained"} disableElevation={true}>Add Product</Button>
+        <Button 
+          onClick={toggleDialog} 
+          color={"secondary"} 
+          style={styles.addButton} 
+          variant={"contained"} 
+          disableElevation={true}>
+          Add Product
+        </Button>
         </div>
     <div style={styles.productCard}>
       {products.map((product) =>{
         return(
           <ProductCard
             key={product._id}
-            _id={product._id}
-            title={product.title}
-            description={product.description}
-            details={product.details}
+            product={product}
           />
         )
       })}
@@ -77,16 +75,14 @@ export const Products = () => {
 
 const styles = {
   productCard: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr",
-    gridColumnGap: "30px",
-    gridRowGap: "30px"
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "10px",
+    justifyContent: "center"
+   
   },
 
-  // container:{
-  //   display: "grid",
-
-  // },
+ 
 
   button:{
     paddingBottom: "1%",

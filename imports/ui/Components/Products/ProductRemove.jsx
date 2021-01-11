@@ -35,7 +35,6 @@ export const ProductRemove = (props) => {
             Cancel
           </Button>
         </DialogActions>
-
    </Dialog>
  </div>
 

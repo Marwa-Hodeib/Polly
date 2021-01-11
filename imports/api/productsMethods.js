@@ -6,43 +6,24 @@ import {checkStringsIfNotEmpty} from '../helpers/index'
 
 Meteor.methods({
 
+  'products.upsert'({productId,title, description, details, price, notes}){
 
+    if (checkStringsIfNotEmpty([title, description, details, price, notes])) {
 
-  'products.insert'(title, description, details){
-   
-   
-    if (checkStringsIfNotEmpty([title,description,details])) {
-
-      ProductsCollection.insert({
-        title,
-        description,
-        details,
-        createdAt: new Date,
-       })
-      
-    }
-   
+      const response = ProductsCollection.upsert(productId, {
+        $set: {
+          title,
+          description,
+          details,
+          price,
+          notes
+        }})
+      }
   },
-
 
   'products.remove'(productId){
     check(productId, String)
 
     ProductsCollection.remove(productId)
   },
-
-
-  'products.updateProduct'({productId,title, description, details}){
-
-    if (checkStringsIfNotEmpty([title, description, details])) {
-      const test = ProductsCollection.update(productId, {
-        $set: {
-          title,
-          description,
-          details
-        }})
-
-    console.log(test)
-    }
-  }
 })
