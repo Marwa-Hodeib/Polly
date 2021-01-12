@@ -36,16 +36,16 @@ export const ProductCard = (props) => {
          isOpen={editOpen}
          closeDialog={toggleEdit} 
       />
-<div onClick={toggleEdit} style={styles.clickableCard}>
   <Card style={styles.container} variant='outlined'>
     <CardContent>
+    <div onClick={toggleEdit} style={styles.clickableCard}>
       <Avatar
         variant="rounded"
         alt="cloths" 
         style={styles.avatar}
         src="https://cdn.pixabay.com/photo/2015/03/03/06/48/fabric-657001_960_720.jpg"
         />
-
+    </div>
         <Typography
           gutterBottom variant="h5" 
           component="h2" 
@@ -81,7 +81,6 @@ export const ProductCard = (props) => {
           </Button>
       </CardActions>
        </Card>
-       </div>
   </div>
   )
 
@@ -97,7 +96,7 @@ const styles = {
   },
 
   title:{
-    paddingTop: "20px"
+    paddingTop: "5%"
   },
 
   avatar:{

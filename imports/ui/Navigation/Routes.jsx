@@ -3,12 +3,13 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
-import {RoutesAdmin} from './RoutesAdmin';
+import {RoutesAdmin} from '../Dashboard/Routes/RoutesAdmin';
+import {Home} from '../Website/Pages/Home';
 
 
 export const Routes = () => {
+  
 
   return(
     <Router>
@@ -17,7 +18,7 @@ export const Routes = () => {
            <RoutesAdmin/>
         </Route>
         <Route  path="/">
-          <h1>Welcome</h1>
+          <Home/>
         </Route>
 
       </Switch>
