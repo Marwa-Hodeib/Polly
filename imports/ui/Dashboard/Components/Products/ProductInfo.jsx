@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Meteor } from 'meteor/meteor';
 import {Button, Dialog, TextField} from '@material-ui/core';
-import {checkStringsIfNotEmpty} from '../../../helpers/index';
+import {checkStringsIfNotEmpty} from '../../../../helpers/index';
 
 
 
@@ -99,6 +99,7 @@ return(
             onChange={updateProductTitle} 
             autoFocus={true}
             margin="normal"
+            rows={1}
           />
 
           <TextField 
@@ -109,6 +110,7 @@ return(
             variant="outlined" 
             onChange={updateProductDetails}
             margin="normal"
+            rows={1}
           />
 
           <TextField 
@@ -119,6 +121,7 @@ return(
             variant="outlined" 
             onChange={updateProductPrice}
             margin="normal"
+            rows={1}
           />
 
           <TextField 
@@ -129,6 +132,7 @@ return(
             variant="outlined" 
             onChange={updateProductNotes}
             margin="normal"
+            rows={1}
           />
 
           <TextField 

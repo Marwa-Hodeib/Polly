@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { ProductsCollection } from '../../db/ProductsCollection';
+import { ProductsCollection } from '../../../db/ProductsCollection';
 import {useTracker} from 'meteor/react-meteor-data';
 import { Button} from '@material-ui/core';
 import { ProductCard } from '../Components/Products/ProductCard';

@@ -96,7 +96,7 @@ const styles = {
   },
 
   title:{
-    paddingTop: "20px"
+    paddingTop: "5%"
   },
 
   avatar:{
