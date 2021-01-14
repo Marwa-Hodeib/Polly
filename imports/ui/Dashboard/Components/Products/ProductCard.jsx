@@ -8,6 +8,7 @@ import { CardContent } from '@material-ui/core';
 import {ProductRemove} from './ProductRemove';
 import { Avatar } from '@material-ui/core';
 import { ProductInfo } from './ProductInfo';
+import {shortenText} from '../../../helpers';
 
 
 
@@ -37,7 +38,7 @@ export const ProductCard = (props) => {
          closeDialog={toggleEdit} 
       />
   <Card style={styles.container} variant='outlined'>
-    <CardContent>
+    <CardContent style={styles.content}>
     <div onClick={toggleEdit} style={styles.clickableCard}>
       <Avatar
         variant="rounded"
@@ -47,9 +48,8 @@ export const ProductCard = (props) => {
         />
     </div>
         <Typography
-          gutterBottom variant="h5" 
-          component="h2" 
-          style={styles.title}>{props.product.title}
+          variant="h6" 
+          style={styles.title}>{shortenText(props.product.title,11) }
          </Typography>
 
         <Typography 
@@ -91,8 +91,11 @@ const styles = {
     width:"170px",
     display: "flex",
     alignItems: "center",
-    flexDirection: "column"
-    
+    flexDirection: "column",    
+  },
+
+  content:{
+    height: "180px",
   },
 
   title:{

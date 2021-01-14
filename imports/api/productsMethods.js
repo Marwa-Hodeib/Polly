@@ -10,20 +10,46 @@ Meteor.methods({
 
     if (checkStringsIfNotEmpty([title, description, details, price, notes])) {
 
-      const response = ProductsCollection.upsert(productId, {
-        $set: {
-          title,
-          description,
-          details,
-          price,
-          notes
-        }})
-      }
+      try{
+        return ProductsCollection.upsert(productId, {
+          $set: {
+            title,
+            description,
+            details,
+            price,
+            notes
+          }})
+        }catch(error){
+          return {
+            "error":"something happened"
+          };
+        }
+      }  
+      return {
+        "error":"something happened"
+      };
+
   },
 
   'products.remove'(productId){
     check(productId, String)
 
-    ProductsCollection.remove(productId)
+    try{
+      const result =  ProductsCollection.remove(productId)
+      if(result){
+        return {
+          "message":"successful"
+        }
+      }
+      return {
+        "error": "something happened"
+      };
+    }
+    catch(error){
+      console.log(error);
+      return {
+        "error": "something happened"
+      };
+    }
   },
 })

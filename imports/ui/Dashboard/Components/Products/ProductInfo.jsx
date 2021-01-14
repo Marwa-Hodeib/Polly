@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, Fragment} from 'react';
 import { Meteor } from 'meteor/meteor';
 import {Button, Dialog, TextField} from '@material-ui/core';
 import {checkStringsIfNotEmpty} from '../../../../helpers/index';
+import {AlertContext} from '../../Context/AlertContext';
 
 
 
@@ -14,6 +15,10 @@ const [productDescription, setProductDescription] = useState ('');
 const [productDetails, setProductDetails] = useState ('');
 const [productPrice, setProductPrice] = useState ('');
 const [productNotes, setProductNotes] = useState ('');
+;
+
+const {setAlertOptions,toggleMessage} = React.useContext(AlertContext)
+
 
 const arrayOfRequiredInputs = [productDescription,productDetails,productTitle,productPrice,productNotes]
 
@@ -39,7 +44,21 @@ useEffect(()=>{
 
 
 const updateProduct = () => {
-  Meteor.call( 'products.upsert',dataToAdd);
+   Meteor.call( 'products.upsert',dataToAdd,(error,response)=>{
+     if(response.error){
+       setAlertOptions({
+         severity: "warning",
+         message: "SOMETHING WENT WRONG!!"
+       })
+     toggleMessage();
+     }else{
+     setAlertOptions({
+       severity: "success",
+       message: "YOU DID ITTTTT"
+     });
+     toggleMessage()
+     }
+   });
   setProductTitle('');
   setProductDescription('');
   setProductDetails('');
@@ -47,6 +66,7 @@ const updateProduct = () => {
   setProductNotes('');
   props.closeDialog(false)
 }
+
 
 const updateProductPrice = (event) => {
   setProductPrice (event.target.value)
@@ -78,8 +98,6 @@ const pageTitle =props.product?._id ? "Product" : "Add Product"
 
 
 return(
-
-    
       <Dialog 
       onBackdropClick={props.closeDialog} 
       onEscapeKeyDown={props.closeDialog} 
@@ -162,11 +180,8 @@ return(
           </Button>
           </div>
         </form>
-
-
-
       </Dialog>
-    
+
 
   )
 
