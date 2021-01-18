@@ -7,24 +7,29 @@ import SimpleSchema from 'simpl-schema';
 ProductsCollection.attachSchema(new SimpleSchema({
   title: {
     type: String,
-    max: 30
+    max: 30,
+    required: true
   },
   description:{
     type: String,
+    required: true
   },
 
   details:{
     type: String,
-    max: 1000
+    max: 1000,
+    required: true
   },
 
   price:{
-    type: Number
+    type: Number,
+    required: true
   },
 
   notes:{
     type: String,
-    max: 1000
+    max: 1000,
+    required: true
   }
 }));
 

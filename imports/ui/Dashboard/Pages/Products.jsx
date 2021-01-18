@@ -9,15 +9,11 @@ import { ProductInfo } from '../Components/Products/ProductInfo';
 
 
 
-
-
 export const Products = () => {
-
-
-
   const [dialogOpen, setDialogOpen] = useState (false);
- 
 
+
+  const logout = () => Meteor.logout();
 
   const toggleDialog = () =>{
     setDialogOpen(!dialogOpen)
@@ -40,6 +36,8 @@ export const Products = () => {
     
   })
 
+  
+
   return (
     <Fragment>
       <ProductInfo
@@ -55,6 +53,14 @@ export const Products = () => {
           variant={"contained"} 
           disableElevation={true}>
           Add Product
+        </Button>
+        <Button 
+          onClick={logout} 
+          color={"secondary"} 
+          style={styles.addButton} 
+          variant={"contained"} 
+          disableElevation={true}>
+          Logout
         </Button>
         </div>
     <div style={styles.productCard}>

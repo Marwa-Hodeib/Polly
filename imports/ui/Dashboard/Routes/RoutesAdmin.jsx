@@ -8,6 +8,7 @@ import {
 import { Products } from "../Pages/Products";
 import {AlertMessage} from '../globalComponents/AlertMessage';
 import {AlertContext} from '../Context/AlertContext';
+import {Login} from '../Pages/Login';
 
 
 
@@ -20,13 +21,13 @@ const [alertOptions, setAlertOptions] = useState ({});
 
 
 
-
 const toggleMessage = () => {
   setIsAlertOpen(!isAlertOpen)
 }
 
 
   const {path} = useRouteMatch()
+  
 
   return(
 
@@ -41,12 +42,17 @@ const toggleMessage = () => {
       <Switch>
         <Route 
           exact path={path}>
-          <h1>Admin</h1>
+          <Login/>
         </Route>
-        <Route 
-          exact path={`${path}/products`}>
-            <Products/>
-        </Route>
+        {Meteor.user() ? 
+         <Route 
+         exact path={`${path}/products`}>
+           <Products/>
+       </Route>
+       :
+       <></>}
+
+       
       </Switch>
     </Router>
     </AlertContext.Provider>

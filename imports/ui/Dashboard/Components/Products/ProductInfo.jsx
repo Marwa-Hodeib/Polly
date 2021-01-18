@@ -10,34 +10,40 @@ import {AlertContext} from '../../Context/AlertContext';
 
 export const ProductInfo = (props) => {
 
-const [productTitle, setProductTitle] = useState ('');
-const [productDescription, setProductDescription] = useState ('');
-const [productDetails, setProductDetails] = useState ('');
-const [productPrice, setProductPrice] = useState ('');
-const [productNotes, setProductNotes] = useState ('');
-;
+
+const [formData, setFormData] = useState ({
+  title: "",
+  description: "",
+  details: "",
+  price: "",
+  notes: ""
+})
+
+
 
 const {setAlertOptions,toggleMessage} = React.useContext(AlertContext)
 
 
-const arrayOfRequiredInputs = [productDescription,productDetails,productTitle,productPrice,productNotes]
+const arrayOfRequiredInputs = [formData.title, 
+  formData.description, 
+  formData.details, 
+  formData.price, 
+  formData.notes]
 
 const dataToAdd = {
   productId: props.product ?._id,
-  title: productTitle, 
-  description: productDescription, 
-  details: productDetails,
-  price: productPrice,
-  notes: productNotes,
+  ...formData
 }
 
 useEffect(()=>{
   if (props.product) {
-    setProductTitle(props.product.title);
-    setProductDescription(props.product.description);
-    setProductDetails(props.product.details);
-    setProductPrice(props.product.price || "");
-    setProductNotes(props.product.notes || "");
+    setFormData({
+      title:props.product.title,
+      description: props.product.description,
+      details: props.product.details,
+      price: props.product.price.toString(),
+      notes: props.product.notes
+    });
   }
   
 },[props.editOpen,props.closeDialog])
@@ -59,38 +65,22 @@ const updateProduct = () => {
      toggleMessage()
      }
    });
-  setProductTitle('');
-  setProductDescription('');
-  setProductDetails('');
-  setProductPrice('');
-  setProductNotes('');
+ setFormData({
+   title: "",
+   description: "",
+   details: "",
+   price: "",
+   notes: ""
+ })
   props.closeDialog(false)
 }
 
-
-const updateProductPrice = (event) => {
-  setProductPrice (event.target.value)
-}
-
-const updateProductNotes = (event) => {
-  setProductNotes (event.target.value)
-}
-
-const updateProductTitle = (event) => {
-  setProductTitle (event.target.value)
-  
-}
-
-const updateProductDescription = (event) => {
-  setProductDescription(event.target.value)
+const updateForm = (event) =>{
+  const copyOfFormData = {...formData};
+  copyOfFormData[event.target.name] = event.target.value;
+  setFormData (copyOfFormData)
 
 }
-
-const updateProductDetails = (event) => {
-  setProductDetails(event.target.value)
- 
-}
-
 
 
 const pageTitle =props.product?._id ? "Product" : "Add Product"
@@ -110,56 +100,61 @@ return(
         <form>
           <div style={styles.container}>
           <TextField 
-            value={productTitle} 
+            name="title"
+            value={formData.title} 
             label="Product Title" 
             multiline={true} 
             variant="outlined" 
-            onChange={updateProductTitle} 
+            onChange={updateForm} 
             autoFocus={true}
             margin="normal"
             rows={1}
           />
 
           <TextField 
-            value={productDetails} 
+            name="details"
+            value={formData.details} 
             label="Product Details" 
             required={true} 
             multiline={true} 
             variant="outlined" 
-            onChange={updateProductDetails}
+            onChange={updateForm}
             margin="normal"
             rows={1}
           />
 
           <TextField 
-            value={productPrice} 
+            name="price"
+            value={formData.price} 
             label="Product Price" 
             required={true} 
             multiline={true} 
             variant="outlined" 
-            onChange={updateProductPrice}
+            onChange={updateForm}
             margin="normal"
             rows={1}
           />
 
           <TextField 
-            value={productNotes} 
+            name="notes"
+            value={formData.notes} 
             label="Product Notes" 
             required={true} 
             multiline={true} 
             variant="outlined" 
-            onChange={updateProductNotes}
+            onChange={updateForm}
             margin="normal"
             rows={1}
           />
 
           <TextField 
-            value={productDescription} 
+            name="description"
+            value={formData.description} 
             label="Product Description" 
             required={true} 
             multiline={true} 
             variant="outlined" 
-            onChange={updateProductDescription}
+            onChange={updateForm}
             margin="normal"
             style={styles.description}
             rows={5}
