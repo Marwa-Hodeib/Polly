@@ -1,16 +1,35 @@
 import { Meteor } from 'meteor/meteor';
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import {AlertContext} from '../Context/AlertContext';
 
 
 export const Login = () => {
   const [userName, setUserName] = useState ('');
   const [password, setPassword] = useState ('');
 
+  const history = useHistory();
+
+  const {setAlertOptions,toggleMessage} = React.useContext(AlertContext)
+
+
 
   const submit = e => {
     e.preventDefault();
-
-    Meteor.loginWithPassword(userName, password)
+    Meteor.loginWithPassword(userName, password, (error)=>{
+      if (error) {
+        setAlertOptions({
+          severity: "warning",
+          message: "Wrong Password or UserName!!"
+        })
+        toggleMessage();
+      }
+      else{
+        history.push('/admin/products')
+      }
+     
+    })
+ 
   };
 
   return (

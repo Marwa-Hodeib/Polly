@@ -5,15 +5,32 @@ import {useTracker} from 'meteor/react-meteor-data';
 import { Button} from '@material-ui/core';
 import { ProductCard } from '../Components/Products/ProductCard';
 import { ProductInfo } from '../Components/Products/ProductInfo';
-
+import { useHistory } from 'react-router-dom';
+import {AlertContext} from '../Context/AlertContext';
 
 
 
 export const Products = () => {
   const [dialogOpen, setDialogOpen] = useState (false);
 
+  const history = useHistory();
 
-  const logout = () => Meteor.logout();
+  const {setAlertOptions,toggleMessage} = React.useContext(AlertContext)
+
+const logout = () => {
+  Meteor.logout((error) => {
+    if (error) {
+      setAlertOptions({
+        severity: "warning",
+        message: "SOMETHING WENT WRONG!!"
+      })
+      toggleMessage();
+    }else{
+      history.push('/admin')
+    }
+  })
+ 
+}
 
   const toggleDialog = () =>{
     setDialogOpen(!dialogOpen)
