@@ -11,10 +11,16 @@ const SEED_PASSWORD = 'password';
 
 
 Meteor.startup(() => {
+
+  Roles.createRole('admin', {unlessExists: true});
+
   if (!Accounts.findUserByUsername(SEED_USERNAME)) {
-    Accounts.createUser({
+   
+    const id = Accounts.createUser({
       username: SEED_USERNAME,
       password: SEED_PASSWORD,
     });
+     Roles.addUsersToRoles(id, 'admin');
   }
 });
+
