@@ -14,12 +14,16 @@ export const ProductsHeader = (props) => {
       position='fixed'
       color='primary'>
         <Toolbar>
-            <SearchIcon/>
+          <div style={{...styles.searchContainer,backgroundColor: props.checked? "#fff" :  "#455a64"}}>
+            <SearchIcon 
+            style={{...styles.searchIcon,color:props.checked? "#000" :  "#fff"}}
+            />
 
             <InputBase
                   placeholder="Search…"
                   inputProps={{ 'aria-label': 'search' }}
                 />
+          </div>
             <Switch
             checked={props.checked}
             onChange={props.onChange}
@@ -33,6 +37,14 @@ export const ProductsHeader = (props) => {
 
 
 const styles = {
- 
+  searchContainer:{
+    display: "flex",
+    alignItems: "center",
+    borderRadius: "10px"
+  },
 
+  searchIcon:{
+    paddingLeft: "3%",
+    paddingRight: "3%"
+  }
 }
