@@ -7,10 +7,11 @@ import { ProductCard } from '../Components/Products/ProductCard';
 import { ProductInfo } from '../Components/Products/ProductInfo';
 import { useHistory } from 'react-router-dom';
 import {AlertContext} from '../Context/AlertContext';
+import {ProductsHeader} from '../Components/Products/ProductsHeader';
 
 
 
-export const Products = () => {
+export const Products = (props) => {
   const [dialogOpen, setDialogOpen] = useState (false);
 
   const history = useHistory();
@@ -80,6 +81,10 @@ const logout = () => {
           Logout
         </Button>
         </div>
+        <ProductsHeader
+          checked={props.checked}
+          onChange={props.onChange}
+        />
     <div style={styles.productCard}>
       {products.map((product) =>{
         return(
@@ -101,15 +106,16 @@ const styles = {
     display: "flex",
     flexWrap: "wrap",
     gap: "10px",
-    justifyContent: "center"
-   
+    justifyContent: "center",
   },
 
  
 
   button:{
-    paddingBottom: "1%",
-  }
+    paddingTop: "5%",
+
+  },
+
 }
 
 

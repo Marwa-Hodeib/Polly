@@ -49,21 +49,22 @@ useEffect(()=>{
 },[props.editOpen,props.closeDialog])
 
 
-const updateProduct = () => {
-   Meteor.call( 'products.upsert',dataToAdd,(error,response)=>{
-     if(response.error){
+const upsertProduct = () => {
+   Meteor.call( 'products.upsert',dataToAdd,(error)=>{
+     console.log(error)
+     if(error){
        setAlertOptions({
          severity: "warning",
          message: "SOMETHING WENT WRONG!!"
        })
-     toggleMessage();
+
      }else{
      setAlertOptions({
        severity: "success",
        message: "YOU DID ITTTTT"
      });
-     toggleMessage()
      }
+     toggleMessage();
    });
  setFormData({
    title: "",
@@ -163,7 +164,7 @@ return(
 
           <div style={styles.buttons}>
           <Button 
-            onClick={updateProduct} 
+            onClick={upsertProduct} 
             disabled={!checkStringsIfNotEmpty(arrayOfRequiredInputs)}
             color={"secondary"}
             >Save

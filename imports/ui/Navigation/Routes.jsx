@@ -4,7 +4,7 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import {RoutesAdmin} from '../Dashboard/Routes/RoutesAdmin';
+import {Admin} from '../Dashboard/Admin';
 import {Home} from '../Website/Pages/Home';
 
 
@@ -15,7 +15,7 @@ export const Routes = () => {
     <Router>
       <Switch>
         <Route path="/admin">
-           <RoutesAdmin/>
+           <Admin/>
         </Route>
         <Route  path="/">
           <Home/>

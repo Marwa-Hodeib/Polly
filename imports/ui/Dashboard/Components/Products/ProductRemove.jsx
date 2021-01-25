@@ -15,21 +15,19 @@ export const ProductRemove = (props) => {
   const {setAlertOptions,toggleMessage} = React.useContext(AlertContext)
   
   const deleteProduct = () => {
-    Meteor.call('products.remove', props._id,(error, response)=>{
-      if (response.error) {
-        setAlertOptionsO({
+    Meteor.call('products.remove', props._id,(error)=>{
+      if (error) {
+        setAlertOptions({
           severity: "warning",
           message: "WHAT THE FUCK DID YOU DO??!!"
         })
-        toggleMessage()
-       
       }else{
         setAlertOptions({
           severity: "success",
           message: "BRAVOOOOOO!!!"
         })
-        toggleMessage() 
       }
+      toggleMessage() 
     });
     props.onClose()
   }
