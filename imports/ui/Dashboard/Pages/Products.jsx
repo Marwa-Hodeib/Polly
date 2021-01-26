@@ -2,36 +2,17 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { ProductsCollection } from '../../../db/ProductsCollection';
 import {useTracker} from 'meteor/react-meteor-data';
-import { Button} from '@material-ui/core';
 import { ProductCard } from '../Components/Products/ProductCard';
 import { ProductInfo } from '../Components/Products/ProductInfo';
-import { useHistory } from 'react-router-dom';
-import {AlertContext} from '../Context/AlertContext';
 import {ProductsHeader} from '../Components/Products/ProductsHeader';
 
 
 
 export const Products = (props) => {
+
   const [dialogOpen, setDialogOpen] = useState (false);
 
-  const history = useHistory();
 
-  const {setAlertOptions,toggleMessage} = React.useContext(AlertContext)
-
-const logout = () => {
-  Meteor.logout((error) => {
-    if (error) {
-      setAlertOptions({
-        severity: "warning",
-        message: "SOMETHING WENT WRONG!!"
-      })
-      toggleMessage();
-    }else{
-      history.push('/admin')
-    }
-  })
- 
-}
 
   const toggleDialog = () =>{
     setDialogOpen(!dialogOpen)
@@ -62,28 +43,10 @@ const logout = () => {
        isOpen={dialogOpen}
        closeDialog={toggleDialog} 
        />
-
-      <div style={styles.button}>
-        <Button 
-          onClick={toggleDialog} 
-          color={"secondary"} 
-          style={styles.addButton} 
-          variant={"contained"} 
-          disableElevation={true}>
-          Add Product
-        </Button>
-        <Button 
-          onClick={logout} 
-          color={"secondary"} 
-          style={styles.addButton} 
-          variant={"contained"} 
-          disableElevation={true}>
-          Logout
-        </Button>
-        </div>
         <ProductsHeader
           checked={props.checked}
           onChange={props.onChange}
+          toggleDialog={toggleDialog}
         />
     <div style={styles.productCard}>
       {products.map((product) =>{
@@ -107,14 +70,9 @@ const styles = {
     flexWrap: "wrap",
     gap: "10px",
     justifyContent: "center",
+    paddingTop: '100px'
   },
 
- 
-
-  button:{
-    paddingTop: "5%",
-
-  },
 
 }
 

@@ -28,8 +28,17 @@ const theme = createMuiTheme({
 palette:{
   type: darkMode ? "dark" : "light",
   primary: {
-    main: '#263238'
-  }
+    main: '#049F76',
+  },
+  secondary:{
+    main: '#e11444'
+  
+  },
+  // background:{
+  //   paper: '#14010F',
+  //   default: '#ffff'
+  
+  
 }
 })
 
