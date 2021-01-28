@@ -1,9 +1,9 @@
 import React from 'react';
 import { AppBar, Toolbar, InputBase, Switch, Button } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import { Meteor } from 'meteor/meteor';
 import { useHistory } from 'react-router-dom';
 import {AlertContext} from '../../Context/AlertContext';
+import {logoutService} from '../../../Services';
 
 
 
@@ -17,16 +17,15 @@ export const ProductsHeader = (props) => {
   const {setAlertOptions,toggleMessage} = React.useContext(AlertContext)
 
   const logout = () => {
-    Meteor.logout((error) => {
-      if (error) {
+    logoutService({
+      errorHandler:()=>{
         setAlertOptions({
           severity: "warning",
           message: "SOMETHING WENT WRONG!!"
         })
-        toggleMessage();
-      }else{
-        history.push('/admin')
-      }
+        toggleMessage()
+      },
+      successHandler:()=>history.push('/admin')
     })
    
   }

@@ -1,8 +1,8 @@
-import React, {useState, useEffect, Fragment} from 'react';
-import { Meteor } from 'meteor/meteor';
+import React, {useState, useEffect} from 'react';
 import {Button, Dialog, TextField} from '@material-ui/core';
 import {checkStringsIfNotEmpty} from '../../../../helpers/index';
 import {AlertContext} from '../../Context/AlertContext';
+import {upsertProductService} from '../../../Services';
 
 
 
@@ -50,22 +50,18 @@ useEffect(()=>{
 
 
 const upsertProduct = () => {
-   Meteor.call( 'products.upsert',dataToAdd,(error)=>{
-     console.log(error)
-     if(error){
-       setAlertOptions({
-         severity: "warning",
-         message: "SOMETHING WENT WRONG!!"
-       })
-
-     }else{
-     setAlertOptions({
-       severity: "success",
-       message: "YOU DID ITTTTT"
-     });
-     }
-     toggleMessage();
-   });
+  upsertProductService({
+    dataToAdd: dataToAdd,
+    errorHandler:()=>setAlertOptions({
+      severity: "warning",
+      message: "SOMETHING WENT WRONG!!"
+    }),
+    successHandler:()=>setAlertOptions({
+      severity: "success",
+      message: "YOU DID ITTTTT"
+    }),
+    runRegardless:toggleMessage
+  })
  setFormData({
    title: "",
    description: "",

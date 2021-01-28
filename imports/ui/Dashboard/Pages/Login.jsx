@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import {AlertContext} from '../Context/AlertContext';
+import {loginService} from '../../Services';
 
 
 export const Login = () => {
@@ -16,20 +17,19 @@ export const Login = () => {
 
   const submit = e => {
     e.preventDefault();
-    Meteor.loginWithPassword(userName, password, (error)=>{
-      if (error) {
+    loginService({
+      userName:userName,
+      password:password,
+      errorHandler:()=>{
         setAlertOptions({
-          severity: "warning",
-          message: "Wrong Password or UserName!!"
-        })
-        toggleMessage();
-      }
-      else{
-        history.push('/admin/products')
-      }
-     
+        severity: "warning",
+        message: "Wrong Password or UserName!!"
+      })
+      toggleMessage()
+    },
+      successHandler:()=>history.push('/admin/products'),
+      
     })
- 
   };
 
   return (

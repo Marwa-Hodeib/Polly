@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import { Meteor } from 'meteor/meteor';
+import React from 'react';
 import { Dialog, DialogActions, DialogTitle, Button } from '@material-ui/core';
 import {AlertContext} from '../../Context/AlertContext';
+import {deleteProductService} from '../../../Services';
 
 
 
@@ -15,20 +15,20 @@ export const ProductRemove = (props) => {
   const {setAlertOptions,toggleMessage} = React.useContext(AlertContext)
   
   const deleteProduct = () => {
-    Meteor.call('products.remove', props._id,(error)=>{
-      if (error) {
-        setAlertOptions({
-          severity: "warning",
-          message: "WHAT THE FUCK DID YOU DO??!!"
-        })
-      }else{
-        setAlertOptions({
-          severity: "success",
-          message: "BRAVOOOOOO!!!"
-        })
-      }
-      toggleMessage() 
-    });
+    deleteProductService({
+      id: props._id,
+      errorHandler:() => setAlertOptions({
+        severity: "warning",
+        message: "WHAT THE FUCK DID YOU DO??!!"
+      }),
+      successHandler:() => setAlertOptions({
+        severity: "success",
+        message: "BRAVOOOOOO!!!"
+      }),
+
+      runRegardless:toggleMessage
+    })
+  
     props.onClose()
   }
 

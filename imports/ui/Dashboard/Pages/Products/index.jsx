@@ -1,10 +1,9 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { Meteor } from 'meteor/meteor';
-import { ProductsCollection } from '../../../db/ProductsCollection';
 import {useTracker} from 'meteor/react-meteor-data';
-import { ProductCard } from '../Components/Products/ProductCard';
-import { ProductInfo } from '../Components/Products/ProductInfo';
-import {ProductsHeader} from '../Components/Products/ProductsHeader';
+import { ProductCard } from './ProductCard';
+import { ProductInfo } from './ProductInfo';
+import {ProductsHeader} from './ProductsHeader';
+import {getProductsService} from '../../../Services';
 
 
 
@@ -19,21 +18,7 @@ export const Products = (props) => {
   }
 
 
-  const {products, isLoading} = useTracker(() => {
-    const noData = {products: []}
-
-    
-    const handler = Meteor.subscribe('products');
-
-    if (!handler.ready()) {
-      return { ...noData, isLoading: true };
-    }
-
-    const products = ProductsCollection.find({}).fetch();
-
-    return {products, isLoading: false};
-    
-  })
+  const {products, isLoading} = useTracker(getProductsService)
 
   
 

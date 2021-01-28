@@ -5,12 +5,12 @@ import {
   Route,
   useRouteMatch
 } from "react-router-dom";
-import { Products } from "./Pages/Products";
-import {AlertMessage} from './globalComponents/AlertMessage';
+import { Products } from './Pages/Products';
+import {AlertMessage} from './Shared Components/AlertMessage';
 import {AlertContext} from './Context/AlertContext';
 import {Login} from './Pages/Login';
 import {useTracker} from 'meteor/react-meteor-data';
-import { createMuiTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 
 
